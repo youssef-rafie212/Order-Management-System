@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int     @id @default(autoincrement())
+  name     String
+  email    String  @unique
+  password String
+  address  String
+  orders   Order[]
+  cart     Cart?
+}
+
+model Product {
+  id          Int         @id @default(autoincrement())
+  name        String
+  description String
+  price       Float
+  stock       Int
+  OrderItems   OrderItem[] 
+  CartItems    CartItem[]
+}
+
+enum OrderStatus {
+  Pending
+  Shipping
+  Shipped
+  Cancelled
+}
+
+model Order {
+  id              Int         @id @default(autoincrement())
+  orderDate       DateTime    @default(now())
+  status          OrderStatus
+  user            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId          Int
+  orderItems      OrderItem[]
+}
+
+model OrderItem {
+  orderId   Int
+  productId Int
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  quantity  Int     @default(1)
+  unitPrice Float // Price at the time of the order 
+
+  @@id([orderId, productId])
+}
+
+model Cart {
+  id        Int        @id @default(autoincrement())
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int        @unique // Using unique cuz each user should have only one cart
+  cartItems CartItem[] 
+}
+
+model CartItem {
+  cartId    Int
+  productId Int
+  cart      Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  quantity  Int     @default(1)
+
+  @@id([cartId, productId])
+}
