@@ -11,4 +11,10 @@ export class UserService {
       data: createUserDto,
     });
   }
+
+  async getAllUserOrders(userId: number) {
+    return await this.prisma.order.findMany({
+      where: { userId },
+    });
+  }
 }
