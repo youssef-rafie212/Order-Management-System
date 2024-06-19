@@ -7,9 +7,8 @@ export class OrderItemService {
   constructor(private prisma: PrismaService) {}
 
   createOrderItem(createOrderItemDto: CreateOrderItemDto) {
-    let data = createOrderItemDto;
     return this.prisma.orderItem.create({
-      data,
+      data: createOrderItemDto,
     });
   }
 }

@@ -27,17 +27,10 @@ model Product {
   CartItems  CartItem[]
 }
 
-enum OrderStatus {
-  Pending
-  Shipping
-  Shipped
-  Cancelled
-}
-
 model Order {
   id         Int         @id @default(autoincrement())
   orderDate  DateTime    @default(now())
-  status     OrderStatus
+  status     String
   user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId     Int
   orderItems OrderItem[]

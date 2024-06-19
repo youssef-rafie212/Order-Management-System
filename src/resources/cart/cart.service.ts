@@ -11,4 +11,11 @@ export class CartService {
       data: createCartDto,
     });
   }
+
+  async getCart(userId: number) {
+    return await this.prisma.cart.findUnique({
+      where: { userId },
+      include: { cartItems: true },
+    });
+  }
 }
