@@ -11,4 +11,8 @@ export class CreateCartItemDto {
 
   @IsNumber()
   quantity?: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  unitPrice: number; // Currrent price
 }

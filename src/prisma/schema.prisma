@@ -23,8 +23,8 @@ model Product {
   description String
   price       Float
   stock       Int
-  OrderItems   OrderItem[] 
-  CartItems    CartItem[]
+  OrderItem  OrderItem[]
+  CartItem  CartItem[]
 }
 
 enum OrderStatus {
@@ -35,38 +35,37 @@ enum OrderStatus {
 }
 
 model Order {
-  id              Int         @id @default(autoincrement())
-  orderDate       DateTime    @default(now())
-  status          OrderStatus
-  user            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId          Int
-  orderItems      OrderItem[]
+  id         Int         @id @default(autoincrement())
+  orderDate  DateTime    @default(now())
+  status     OrderStatus
+  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     Int
+  orderItems OrderItem[]
 }
 
 model OrderItem {
-  orderId   Int
-  productId Int
-  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  id        Int     @id @default(autoincrement())
   quantity  Int     @default(1)
-  unitPrice Float // Price at the time of the order 
-
-  @@id([orderId, productId])
+  product   Product @relation(fields: [productId], references: [id])
+  productId Int
+  order     Order   @relation(fields: [orderId], references: [id])
+  orderId   Int
+  unitPrice Float // Price at the order time
 }
 
 model Cart {
   id        Int        @id @default(autoincrement())
   user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    Int        @unique // Using unique cuz each user should have only one cart
-  cartItems CartItem[] 
+  userId    Int        @unique // Using unique because each user should have only one cart
+  cartItems CartItem[]
 }
 
 model CartItem {
-  cartId    Int
-  productId Int
-  cart      Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
-  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  id        Int     @id @default(autoincrement())
   quantity  Int     @default(1)
-
-  @@id([cartId, productId])
+  product   Product @relation(fields: [productId], references: [id])
+  productId Int
+  cart      Cart    @relation(fields: [cartId], references: [id])
+  cartId    Int
+  unitPrice Float // Current price
 }
