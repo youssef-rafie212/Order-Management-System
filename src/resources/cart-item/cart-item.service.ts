@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from 'prisma/prisma.service';
 import { CreateCartItemDto } from './dto/createCartItem.dto';
 import { UpdateCartItemDto } from './dto/updateCartItem.dto';
 import { RemoveCartItemDto } from './dto/removeCartItem.dto';

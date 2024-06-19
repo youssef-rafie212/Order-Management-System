@@ -1,6 +1,3 @@
--- CreateEnum
-CREATE TYPE "OrderStatus" AS ENUM ('Pending', 'Shipping', 'Shipped', 'Cancelled');
-
 -- CreateTable
 CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
@@ -27,7 +24,7 @@ CREATE TABLE "Product" (
 CREATE TABLE "Order" (
     "id" SERIAL NOT NULL,
     "orderDate" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "status" "OrderStatus" NOT NULL,
+    "status" TEXT NOT NULL,
     "userId" INTEGER NOT NULL,
 
     CONSTRAINT "Order_pkey" PRIMARY KEY ("id")
