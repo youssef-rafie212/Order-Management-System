@@ -2,6 +2,7 @@ import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/createOrder.dto';
 import { UpdateOrderDto } from './dto/updateOrder.dto';
+import { ApplyCouponDto } from './dto/applyCoupon.dto';
 
 @Controller('/api/orders')
 export class OrderController {
@@ -10,6 +11,11 @@ export class OrderController {
   @Post()
   createOrder(@Body() createOrderDto: CreateOrderDto) {
     return this.orderService.createOrder(createOrderDto);
+  }
+
+  @Post('apply-coupon')
+  async applyCoupon(@Body() applyCouponDto: ApplyCouponDto) {
+    return await this.orderService.applyCoupon(applyCouponDto.orderId);
   }
 
   @Get(':orderId')
