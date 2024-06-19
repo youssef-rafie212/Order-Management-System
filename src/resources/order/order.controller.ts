@@ -3,7 +3,7 @@ import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/createOrder.dto';
 import { UpdateOrderDto } from './dto/updateOrder.dto';
 
-@Controller('/api/order')
+@Controller('/api/orders')
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 

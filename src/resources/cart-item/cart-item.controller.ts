@@ -4,7 +4,7 @@ import { CreateCartItemDto } from './dto/createCartItem.dto';
 import { UpdateCartItemDto } from './dto/updateCartItem.dto';
 import { RemoveCartItemDto } from './dto/removeCartItem.dto';
 
-@Controller('/api/cart-item')
+@Controller('/api/cart-items')
 export class CartItemController {
   constructor(private readonly cartItemService: CartItemService) {}
 

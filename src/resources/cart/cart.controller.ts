@@ -2,7 +2,7 @@ import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CartService } from './cart.service';
 import { CreateCartDto } from './dto/createCart.dto';
 
-@Controller('/api/cart')
+@Controller('/api/carts')
 export class CartController {
   constructor(private readonly cartService: CartService) {}
 
