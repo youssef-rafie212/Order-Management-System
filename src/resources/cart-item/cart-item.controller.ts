@@ -1,4 +1,4 @@
-import { Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { CartItemService } from './cart-item.service';
 import { CreateCartItemDto } from './dto/createCartItem.dto';
 
@@ -7,7 +7,7 @@ export class CartItemController {
   constructor(private readonly cartItemService: CartItemService) {}
 
   @Post()
-  createCartItem(createCartItemDto: CreateCartItemDto) {
+  createCartItem(@Body() createCartItemDto: CreateCartItemDto) {
     return this.cartItemService.createCartItem(createCartItemDto);
   }
 }

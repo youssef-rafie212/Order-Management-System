@@ -23,8 +23,8 @@ model Product {
   description String
   price       Float
   stock       Int
-  OrderItem  OrderItem[]
-  CartItem  CartItem[]
+  OrderItems  OrderItem[]
+  CartItems  CartItem[]
 }
 
 enum OrderStatus {
