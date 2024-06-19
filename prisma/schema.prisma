@@ -30,10 +30,11 @@ model Product {
 model Order {
   id         Int         @id @default(autoincrement())
   orderDate  DateTime    @default(now())
-  status     String
+  status     String       
   user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId     Int
   orderItems OrderItem[]
+  totalPrice Float       @default(0)
 }
 
 model OrderItem {
