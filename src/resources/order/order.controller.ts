@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/createOrder.dto';
+import { UpdateOrderDto } from './dto/updateOrder.dto';
 
 @Controller('/api/order')
 export class OrderController {
@@ -19,13 +20,11 @@ export class OrderController {
   @Put(':orderId/status')
   async updateOrder(
     @Param('orderId') orderId: string,
-    @Body() newStatus: string,
+    @Body() updateOrderDto: UpdateOrderDto,
   ) {
-    const dto = {
-      orderId: parseInt(orderId, 10),
-      newStatus,
-    };
-
-    return await this.orderService.updateOrder(dto);
+    return await this.orderService.updateOrder(
+      parseInt(orderId, 10),
+      updateOrderDto.newStatus,
+    );
   }
 }

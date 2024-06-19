@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
-
 import { CreateOrderDto } from './dto/createOrder.dto';
-import { UpdateOrderDto } from './dto/updateOrder.dto';
 import { PrismaService } from 'prisma/prisma.service';
 
 @Injectable()
@@ -20,14 +18,10 @@ export class OrderService {
     });
   }
 
-  async updateOrder(updateOrderDto: UpdateOrderDto) {
+  async updateOrder(orderId: number, newStatus: string) {
     return await this.prisma.order.update({
-      where: { id: updateOrderDto.orderId },
-      data: {
-        status: {
-          set: updateOrderDto.newStatus,
-        },
-      },
+      where: { id: orderId },
+      data: { status: newStatus },
     });
   }
 }
