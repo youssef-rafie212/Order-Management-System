@@ -5,11 +5,12 @@
 ## Steps for using and testing the project
 
 - clone the repo
-- open the project and download all the packages using => npm install
+- install all the packages using => npm install
 - create a postgresql database on your local system
 - update the .env file by changing the DATABASE_URL to match your database URL
 - migrate the prisma schema using => npx prisma migrate dev
 - generate the prisma client using => npx prisma generate
+- build the app using => npm run build
 - start the application using => npm start
 - to test the endpoints you can use a software like postman while following the provided documentation below
 
