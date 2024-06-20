@@ -1,6 +1,6 @@
 # Order Management System Task for Slash.
 
-- Note: i tried to simplify the implementation like not adding alot of validation or many types or password hashing because i don't know what is the deadline of the task (wasn't provided)
+- Note: i tried to simplify the implementation like not adding alot of validation because i don't know what is the deadline of the task (wasn't provided)
 
 ## Steps for using and testing the project
 
