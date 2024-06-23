@@ -30,7 +30,7 @@ export class CartItemService {
       });
     }
 
-    return this.prisma.cartItem.create({
+    return await this.prisma.cartItem.create({
       data: createCartItemDto,
     });
   }

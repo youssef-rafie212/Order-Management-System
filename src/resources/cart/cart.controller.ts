@@ -7,8 +7,8 @@ export class CartController {
   constructor(private readonly cartService: CartService) {}
 
   @Post()
-  createCart(@Body() createCartdto: CreateCartDto) {
-    return this.cartService.createCart(createCartdto);
+  async createCart(@Body() createCartdto: CreateCartDto) {
+    return await this.cartService.createCart(createCartdto);
   }
 
   @Get(':userId')

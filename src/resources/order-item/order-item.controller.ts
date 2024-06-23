@@ -7,7 +7,7 @@ export class OrderItemController {
   constructor(private readonly orderItemService: OrderItemService) {}
 
   @Post()
-  createOrderItem(@Body() createOrderItemDto: CreateOrderItemDto) {
-    return this.orderItemService.createOrderItem(createOrderItemDto);
+  async createOrderItem(@Body() createOrderItemDto: CreateOrderItemDto) {
+    return await this.orderItemService.createOrderItem(createOrderItemDto);
   }
 }

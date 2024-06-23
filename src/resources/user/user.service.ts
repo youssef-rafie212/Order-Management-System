@@ -11,7 +11,7 @@ export class UserService {
     // Hash the password
     createUserDto.password = await bcrypt.hash(createUserDto.password, 12);
 
-    return this.prisma.user.create({
+    return await this.prisma.user.create({
       data: createUserDto,
     });
   }

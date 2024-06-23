@@ -6,8 +6,8 @@ import { CreateCartDto } from './dto/createCart.dto';
 export class CartService {
   constructor(private prisma: PrismaService) {}
 
-  createCart(createCartDto: CreateCartDto) {
-    return this.prisma.cart.create({
+  async createCart(createCartDto: CreateCartDto) {
+    return await this.prisma.cart.create({
       data: createCartDto,
     });
   }

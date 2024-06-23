@@ -9,8 +9,8 @@ export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
   @Post()
-  createOrder(@Body() createOrderDto: CreateOrderDto) {
-    return this.orderService.createOrder(createOrderDto);
+  async createOrder(@Body() createOrderDto: CreateOrderDto) {
+    return await this.orderService.createOrder(createOrderDto);
   }
 
   @Post('apply-coupon')

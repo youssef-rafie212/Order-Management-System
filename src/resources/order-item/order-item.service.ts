@@ -25,7 +25,7 @@ export class OrderItemService {
       data: { totalPrice: currentTotalPrice + total },
     });
 
-    return this.prisma.orderItem.create({
+    return await this.prisma.orderItem.create({
       data: createOrderItemDto,
     });
   }

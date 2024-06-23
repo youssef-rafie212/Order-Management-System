@@ -6,15 +6,42 @@ import { PrismaService } from 'prisma/prisma.service';
 export class OrderService {
   constructor(private prisma: PrismaService) {}
 
-  createOrder(createOrderDro: CreateOrderDto) {
-    return this.prisma.order.create({
+  async createOrder(createOrderDro: CreateOrderDto) {
+    const createdOrder = await this.prisma.order.create({
       data: createOrderDro,
     });
+
+    // Get user cart
+    const cart = await this.prisma.cart.findUnique({
+      where: {
+        id: createOrderDro.userId,
+      },
+      include: {
+        cartItems: true,
+      },
+    });
+
+    // Create an order item for each item in the cart
+    cart.cartItems.forEach(async (cartItem) => {
+      await this.prisma.orderItem.create({
+        data: {
+          orderId: createdOrder.id,
+          productId: cartItem.productId,
+          quantity: cartItem.quantity,
+          unitPrice: cartItem.unitPrice,
+        },
+      });
+    });
+
+    return createdOrder;
   }
 
   async getOrder(orderId: number) {
     return await this.prisma.order.findUnique({
       where: { id: orderId },
+      include: {
+        orderItems: true,
+      },
     });
   }
 
