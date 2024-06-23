@@ -26,8 +26,8 @@ export class OrderService {
     });
 
     // Create an order item for each item in the cart
-    cart.cartItems.forEach(async (cartItem) => {
-      await this.orderItemService.createOrderItem({
+    const createOrderItemPromises = cart.cartItems.map((cartItem) => {
+      return this.orderItemService.createOrderItem({
         orderId: createdOrder.id,
         productId: cartItem.productId,
         quantity: cartItem.quantity,
@@ -35,7 +35,25 @@ export class OrderService {
       });
     });
 
-    return createdOrder;
+    await Promise.all(createOrderItemPromises);
+
+    // Calculate the total price after all items have been created
+    const orderItems = await this.prisma.orderItem.findMany({
+      where: {
+        orderId: createdOrder.id,
+      },
+    });
+
+    const totalPrice = orderItems.reduce((sum, item) => {
+      return sum + item.unitPrice * item.quantity;
+    }, 0);
+
+    await this.prisma.order.update({
+      where: { id: createdOrder.id },
+      data: { totalPrice },
+    });
+
+    return await this.getOrder(createdOrder.id);
   }
 
   async getOrder(orderId: number) {
