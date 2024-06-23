@@ -69,6 +69,9 @@ export class OrderService {
     return await this.prisma.order.update({
       where: { id: orderId },
       data: { status: newStatus },
+      include: {
+        orderItems: true,
+      },
     });
   }
 
@@ -87,6 +90,7 @@ export class OrderService {
     return await this.prisma.order.update({
       where: { id: orderId },
       data: { totalPrice: oldTotalPrice / 2 },
+      include: { orderItems: true },
     });
   }
 }
