@@ -1,10 +1,14 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateOrderDto } from './dto/createOrder.dto';
 import { PrismaService } from 'prisma/prisma.service';
+import { OrderItemService } from '../order-item/order-item.service';
 
 @Injectable()
 export class OrderService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private orderItemService: OrderItemService,
+  ) {}
 
   async createOrder(createOrderDro: CreateOrderDto) {
     const createdOrder = await this.prisma.order.create({
@@ -23,13 +27,11 @@ export class OrderService {
 
     // Create an order item for each item in the cart
     cart.cartItems.forEach(async (cartItem) => {
-      await this.prisma.orderItem.create({
-        data: {
-          orderId: createdOrder.id,
-          productId: cartItem.productId,
-          quantity: cartItem.quantity,
-          unitPrice: cartItem.unitPrice,
-        },
+      await this.orderItemService.createOrderItem({
+        orderId: createdOrder.id,
+        productId: cartItem.productId,
+        quantity: cartItem.quantity,
+        unitPrice: cartItem.unitPrice,
       });
     });
 
