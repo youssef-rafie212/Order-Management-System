@@ -26,7 +26,7 @@ export class CartItemService {
     if (product) {
       return await this.prisma.cartItem.update({
         where: { id: product.id },
-        data: { quantity: product.quantity + 1 },
+        data: { quantity: product.quantity + createCartItemDto.quantity },
       });
     }
 
