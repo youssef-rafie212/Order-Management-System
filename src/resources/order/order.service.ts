@@ -14,7 +14,7 @@ export class OrderService {
     // Get user cart
     const cart = await this.prisma.cart.findUnique({
       where: {
-        id: createOrderDro.userId,
+        userId: createOrderDro.userId,
       },
       include: {
         cartItems: true,
