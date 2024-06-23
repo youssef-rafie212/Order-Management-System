@@ -11,9 +11,18 @@ export class UserService {
     // Hash the password
     createUserDto.password = await bcrypt.hash(createUserDto.password, 12);
 
-    return await this.prisma.user.create({
+    const createdUser = await this.prisma.user.create({
       data: createUserDto,
     });
+
+    // Create a cart for the user
+    await this.prisma.cart.create({
+      data: {
+        userId: createdUser.id,
+      },
+    });
+
+    return createdUser;
   }
 
   async getAllUserOrders(userId: number) {
